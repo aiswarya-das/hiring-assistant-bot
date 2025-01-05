@@ -307,16 +307,15 @@ if st.session_state.question_index < len(questions):
 # Handle tech answers after gathering user info
 if st.session_state.question_index >= len(questions):
     # Check if tech questions exist
-    if st.session_state.tech_questions:
+       if st.session_state.tech_questions:
         # Ask user for answers to the technical questions
         tech_answer = st.chat_input("Answer the technical questions here:")
-        if tech_answer:
-            st.markdown(
-                f'<div class="user">{tech_answer}</div>', unsafe_allow_html=True
-            )
-            st.session_state.conversation.append(
-                {"role": "user", "content": tech_answer}
-            )
+        answers = [line.strip() for line in tech_answer.split("\n") if line.strip()]
+        for answer in answers:
+            print(answer, "answer")
+            st.sidebar.write(answer)
+            st.markdown(f'<div class="user">{answer}</div>', unsafe_allow_html=True)
+            st.session_state.conversation.append({"role": "user", "content": answer})
 
             position = st.session_state.responses.get("What's your desired position?")
             tech_stack = st.session_state.responses.get("What's your tech stack?")
