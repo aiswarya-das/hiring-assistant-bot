@@ -1,5 +1,5 @@
 import streamlit as st
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from openai import OpenAI
 import os
 import re
@@ -16,7 +16,7 @@ if "tech_questions" not in st.session_state:
 if "tech_evaluations" not in st.session_state:
     st.session_state.tech_evaluations = []  # Store technical evaluations
 
-load_dotenv()
+# load_dotenv()
 # client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 api_key = st.sidebar.text_input("Enter your OpenAI API key", type="password")
