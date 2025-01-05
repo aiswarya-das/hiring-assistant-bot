@@ -310,39 +310,41 @@ if st.session_state.question_index >= len(questions):
        if st.session_state.tech_questions:
         # Ask user for answers to the technical questions
         tech_answer = st.chat_input("Answer the technical questions here:")
-        answers = [line.strip() for line in tech_answer.split("\n") if line.strip()]
-        for answer in answers:
-            print(answer, "answer")
-            st.sidebar.write(answer)
-            st.markdown(f'<div class="user">{answer}</div>', unsafe_allow_html=True)
-            st.session_state.conversation.append({"role": "user", "content": answer})
+        if tech_answer:
+            answers = [line.strip() for line in tech_answer.split("\n") if line.strip()]
+        # answers = [line.strip() for line in tech_answer.split("\n") if line.strip()]
+            for answer in answers:
+                print(answer, "answer")
+                st.sidebar.write(answer)
+                st.markdown(f'<div class="user">{answer}</div>', unsafe_allow_html=True)
+                st.session_state.conversation.append({"role": "user", "content": answer})
 
-            position = st.session_state.responses.get("What's your desired position?")
-            tech_stack = st.session_state.responses.get("What's your tech stack?")
+                position = st.session_state.responses.get("What's your desired position?")
+                tech_stack = st.session_state.responses.get("What's your tech stack?")
 
-            evaluation = evaluate_user_answers(tech_stack, tech_answer, position)
+                evaluation = evaluate_user_answers(tech_stack, tech_answer, position)
 
             # print("evaluation", evaluation)
 
-            evals = [line.strip() for line in evaluation.split("\n") if line.strip()]
+                evals = [line.strip() for line in evaluation.split("\n") if line.strip()]
 
-            st.session_state.tech_evaluations.extend(evals)
-            for eva in evals:
-                st.session_state.conversation.append(
+                st.session_state.tech_evaluations.extend(evals)
+                for eva in evals:
+                    st.session_state.conversation.append(
                     {"role": "assistant", "content": eva}
-                )
-                st.markdown(
+                    )
+                    st.markdown(
                     f'<div class="assistant">{eva}</div>', unsafe_allow_html=True
-                )
+                    )
 
             # End the conversation
-            st.markdown(
+                st.markdown(
                 f'<div class="assistant">Thank you for your time! The hiring process is complete. We will get back to you with the next steps.</div>',
                 unsafe_allow_html=True,
-            )
+                )
 
-            st.session_state.question_index = len(questions)  # End the conversation
-            st.session_state.tech_questions = []  # Clear tech questions for the next user
-            st.session_state.responses = {}  # Clear user responses
-            st.session_state.evaluation = []  # Clear evaluation history
-            st.stop()
+                st.session_state.question_index = len(questions)  # End the conversation
+                st.session_state.tech_questions = []  # Clear tech questions for the next user
+                st.session_state.responses = {}  # Clear user responses
+                st.session_state.evaluation = []  # Clear evaluation history
+                st.stop()
